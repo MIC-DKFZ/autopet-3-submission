@@ -1,3 +1,4 @@
+import os
 import torch
 from torch._dynamo import OptimizedModule
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -24,6 +25,7 @@ def load_pretrained_weights(network, fname, verbose=False):
 
     skip_strings_in_pretrained = [
         '.seg_layers.',
+        'organ_seg_layers'
     ]
 
     if isinstance(network, DDP):
@@ -36,6 +38,21 @@ def load_pretrained_weights(network, fname, verbose=False):
     model_dict = mod.state_dict()
     # verify that all but the segmentation layers have the same shape
     for key, _ in model_dict.items():
+        # Replicate the stem to fit the number of input channels
+        if os.environ.get("STEM") == "autoPET":
+            if 'encoder.stem' in key:
+                if 'decoder.encoder.stem' in key:
+                    pretrained_dict[key] = pretrained_dict[key[:21] + "221" + '.' + key[21:]]
+                else:
+                    pretrained_dict[key] = pretrained_dict[key[:13] + "221" + '.' + key[13:]]
+        else:
+            # if 'stem' in key:
+            #     pretrained_dict[key] = pretrained_dict[key].repeat(1, 2, 1, 1, 1) if len(pretrained_dict[key].shape) == 5 else pretrained_dict[key]
+            skip_strings_in_pretrained = [
+            '.seg_layers.',
+            '.stem'
+            ]
+            
         if all([i not in key for i in skip_strings_in_pretrained]):
             assert key in pretrained_dict, \
                 f"Key {key} is missing in the pretrained model weights. The pretrained weights do not seem to be " \
@@ -44,6 +61,8 @@ def load_pretrained_weights(network, fname, verbose=False):
                 f"The shape of the parameters of key {key} is not the same. Pretrained model: " \
                 f"{pretrained_dict[key].shape}; your network: {model_dict[key]}. The pretrained model " \
                 f"does not seem to be compatible with your network."
+
+
 
     # fun fact: in principle this allows loading from parameters that do not cover the entire network. For example pretrained
     # encoders. Not supported by this function though (see assertions above)
