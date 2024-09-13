@@ -99,7 +99,6 @@ ENV/
 *.txt
 .idea/*
 *.png
-*.nii.gz
 *.nii
 *.tif
 *.bmp

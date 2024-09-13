@@ -80,6 +80,7 @@ nnUNetv2_move_plans_between_datasets = "nnunetv2.experiment_planning.plans_for_p
 nnUNetv2_evaluate_folder = "nnunetv2.evaluation.evaluate_predictions:evaluate_folder_entry_point"
 nnUNetv2_evaluate_simple = "nnunetv2.evaluation.evaluate_predictions:evaluate_simple_entry_point"
 nnUNetv2_convert_MSD_dataset = "nnunetv2.dataset_conversion.convert_MSD_dataset:entry_point"
+nnUNetv2_merge_lesion_and_organ_dataset = "nnunetv2.preprocessing.organ_extraction.combine_lesion_and_organs:merge_datasets_entry_point"
 
 [project.optional-dependencies]
 dev = [
