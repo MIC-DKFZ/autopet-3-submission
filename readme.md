@@ -30,19 +30,19 @@ Our model builds on [nnU-Net](https://github.com/MIC-DKFZ/nnUNet) with a [ResEnc
 We recommend to create a new conda environment and then run:
 
 
-          ```bash
-          git clone https://github.com/MIC-DKFZ/autopet-3-submission.git
-          cd autopet-3-submission
-          pip install -e .
-          ```
+```bash
+git clone https://github.com/MIC-DKFZ/autopet-3-submission.git
+cd autopet-3-submission
+pip install -e .
+```
 
 ### Preprocessing
 
 Download the [autoPET dataset](https://autopet-iii.grand-challenge.org/dataset/) and use the standard nnUNet preprocessing pipeline. You can adjust the number of processes for faster processing. You can freely chose your dataset number which we quote as DATASET_ID_LESIONS.
 
-          ```bash
-        nnUNetv2_plan_and_preprocess -d DATASET_ID_LESIONS -c 3d_fullres -np 20 -npfp 20
-          ```
+```bash
+nnUNetv2_plan_and_preprocess -d DATASET_ID_LESIONS -c 3d_fullres -np 20 -npfp 20
+```
 
 ### Extract organs from CT image
 
@@ -52,19 +52,19 @@ You can either:
 
 1.    Use our predicted organ masks which we made availabe [in this repo](nnunetv2/preprocessing/organ_extraction/autopet3_organ_labels) 
 
-2.    Follow these instructions for your own dataset: This one is a bit time-consuming to redo, so hang with me here. First, install TotalSegmentator using ```pip install TotalSegmentator```. We did it in a separate environment. Then put [this script](nnunetv2/preprocessing/organ_extraction/predict_and_extract_organs.py) into your nnUNet_raw dataset directory for autoPETIII. Running this script can take a long time for the whole dataset (several days on our machines) since the TotalSegmentator inference is not optimized to handle several cases simultaneously. 
+2.    Follow these instructions for your own dataset: This one is a bit time-consuming to redo, so hang with me here. First, install TotalSegmentator using ```pip install TotalSegmentator```. We did it in a separate environment. Then put [this script](nnunetv2/preprocessing/organ_extraction/predict_and_extract_organs.py) into your nnUNet_raw dataset directory for autoPETIII. Running this script can take a long time for the whole dataset (several days on our machines) since the TotalSegmentator inference is not optimized to handle several cases simultaneously.
 
-          ```bash
-          python predict_and_extract_organs.py
-          ```
+        ```bash
+        python predict_and_extract_organs.py
+        ```
 
 When this step is done, copy the raw nnUNet dataset such that you have a new dataset which is identical. The original dataset containing lesions annotations should have a separate DATASET_ID_LESIONS than the new DATASET_ID_ORGANS. E.g. "Dataset200_autoPET3_lesions" and "Dataset200_autoPET3_organs". Then exchange the content of the  ```labelsTr``` folder with the provided [organ labels](nnunetv2/preprocessing/organ_extraction/autopet3_organ_labels) or in case you ran the above script (TotalSegmentator inference) use the labels from ```labelsTr_organs```. Now run the preprocessing again for the new dataset. Important: do not use the ```--verify_dataset_integrity``` flag.
 
 Lastly, to combine the datasets run
 
-          ```bash
-          nnUNetv2_merge_lesion_and_organ_dataset -l DATASET_ID_LESIONS -o DATASET_ID_ORGANS
-          ```
+```bash
+nnUNetv2_merge_lesion_and_organ_dataset -l DATASET_ID_LESIONS -o DATASET_ID_ORGANS
+```
 
 Now you are good to go to start a training. Use the dataset with DATASET_ID_LESIONS for any further steps. If everything runs smoothly you could discard the dataset folder with DATASET_ID_ORGANS.
 
@@ -75,9 +75,9 @@ Now you are good to go to start a training. Use the dataset with DATASET_ID_LESI
 
 Training the model can be simply achieved by [downloading the pretrained checkpoint](https://zenodo.org/records/13753413) (Dataset619_nativemultistem) and running:
 
-          ```bash
-          nnUNetv2_train DATASET_ID_LESIONS 3d_fullres 0 -tr autoPET3_Trainer -p nnUNetResEncUNetLPlansMultiTalent -pretrained_weights /path/to/pretrained/weights/fold_all/checkpoint_final.pth
-          ```
+```bash
+nnUNetv2_train DATASET_ID_LESIONS 3d_fullres 0 -tr autoPET3_Trainer -p nnUNetResEncUNetLPlansMultiTalent -pretrained_weights /path/to/pretrained/weights/fold_all/checkpoint_final.pth
+```
 
 We train a five fold cross-validation for our final submission.
 
