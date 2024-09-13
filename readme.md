@@ -4,8 +4,6 @@ This repository provides the code for running our approach to the [AutoPET III C
 
 From FDG to PSMA: A Hitchhiker's Guide to Multitracer, Multicenter Lesion Segmentation in PET/CT Imaging 
 
-&nbsp; &nbsp;   [![arXiv](https://img.shields.io/badge/arXiv-2404.03010-B31B1B.svg)](https://arxiv.org/abs/2404.03010) 
-
 Authors:  
 Maximilian Rokuss, Balint Kovacs, Yannick Kirchhoff, Shuhan Xiao, Constantin Ulrich, Klaus H. Maier-Hein and Fabian Isensee
 
