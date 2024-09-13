@@ -16,7 +16,7 @@ Faculty of Mathematics and Computer Science, Heidelberg University
 
 # Overview
 
-The exact intructions how to use this repo will be made publicly availabe after the challenge ends.
+The exact instructions how to use this repo will be made publicly availabe after the challenge ends.
 
 
 Happy coding! 🚀
