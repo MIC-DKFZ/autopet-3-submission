@@ -1,8 +1,10 @@
 # Welcome to our solution for the autoPET III challenge
 
-This repository provides the code for running our approach to the [AutoPET III Challenge](https://autopet-iii.grand-challenge.org/). When using this repository, please cite our paper:
+This repository provides the code for running our approach to the [AutoPET III Challenge](https://autopet-iii.grand-challenge.org/) (*Team LesionTracer*). When using this repository, please cite our paper:
 
 **From FDG to PSMA: A Hitchhiker's Guide to Multitracer, Multicenter Lesion Segmentation in PET/CT Imaging** 
+
+&nbsp; &nbsp;   [![arXiv](https://img.shields.io/badge/arXiv-2409.09478-b31b1b.svg)](http://arxiv.org/abs/2409.09478)
 
 
 Authors:  
@@ -18,7 +20,7 @@ Faculty of Mathematics and Computer Science, Heidelberg University
 Our model builds on [nnU-Net](https://github.com/MIC-DKFZ/nnUNet) with a [ResEncL architecture](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/resenc_presets.md) preset as a strong baseline. We then introduce several improvements:
 
 - We adjusted the plans file using a patch size of  ```[192,192,192]``` such that the model has a high contextual understanding. You can find the the plans [here](nnunetv2/architecture/nnUNetResEncUNetLPlansMultiTalent.json) (remember to change the "dataset_name" field to your dataset name).
-- The model is pretrained on a diverse collection of medical imaging datasets to establish a strong anatomical understanding, which we then fine-tune on the autoPET III challange dataset. The pretrained checkpoint we use for *initializing the model before training* is availabe [here](https://zenodo.org/records/13753413) (Dataset619_nativemultistem). Note that, this is not the final model checkpoint.
+- The model is pretrained on a diverse collection of medical imaging datasets to establish a strong anatomical understanding, which we then fine-tune on the autoPET III challange dataset. The pretrained checkpoint we use for *initializing the model before training* is availabe [here](https://zenodo.org/records/13753413) (Dataset619_nativemultistem). Note, that this is not the final model checkpoint.
 - The model is trained using [misalignment data augmentation](https://github.com/MIC-DKFZ/misalignment_DA) as well as omitting the smoothing term in the dice loss calcuation.
 - We use a dual-headed architecture for organ and lesion segmentation which improves performance as well as speeds up convergence, especially in cases without lesions.
 
