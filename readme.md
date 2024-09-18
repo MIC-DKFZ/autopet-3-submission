@@ -24,6 +24,8 @@ Our model builds on [nnU-Net](https://github.com/MIC-DKFZ/nnUNet) with a [ResEnc
 - The model is trained using [misalignment data augmentation](https://github.com/MIC-DKFZ/misalignment_DA) as well as omitting the smoothing term in the dice loss calcuation.
 - We use a dual-headed architecture for organ and lesion segmentation which improves performance as well as speeds up convergence, especially in cases without lesions.
 
+**You can [download the final checkpoint here](https://zenodo.org/records/13786235)!**
+
 ## Getting started
 
 ### Installation
@@ -59,7 +61,7 @@ You can either:
         python predict_and_extract_organs.py
         ```
 
-When this step is done, copy the raw nnUNet dataset such that you have a new dataset which is identical. The original dataset containing lesions annotations should have a different DATASET_ID_ORGANS than the original DATASET_ID_LESIONS. E.g. "Dataset200_autoPET3_lesions" and "Dataset200_autoPET3_organs". Then exchange the content of the  ```labelsTr``` folder with the provided [organ labels](nnunetv2/preprocessing/organ_extraction/autopet3_organ_labels) or in case you ran the above script (TotalSegmentator inference) use the labels from ```labelsTr_organs```. Now run the preprocessing again for the new dataset. Important: do not use the ```--verify_dataset_integrity``` flag.
+When this step is done, copy the raw nnUNet dataset such that you have a new dataset which is identical. The original dataset containing lesions annotations should have a different DATASET_ID_ORGANS than the original DATASET_ID_LESIONS. E.g. "Dataset200_autoPET3_lesions" and "Dataset201_autoPET3_organs". Then exchange the content of the  ```labelsTr``` folder with the provided [organ labels](nnunetv2/preprocessing/organ_extraction/autopet3_organ_labels) or in case you ran the above script (TotalSegmentator inference) use the labels from ```labelsTr_organs```. Now run the preprocessing again for the new dataset. Important: do not use the ```--verify_dataset_integrity``` flag.
 
 Lastly, to combine the datasets run
 
@@ -83,7 +85,32 @@ nnUNetv2_train DATASET_ID_LESIONS 3d_fullres 0 -tr autoPET3_Trainer -p nnUNetRes
 We train a five fold cross-validation for our final submission.
 
 
+### Inference
+
+After training your own model or [downloading our final checkpoint here](https://zenodo.org/records/13786235) you can use the standard nnUNet inference, for more information see [here](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/how_to_use_nnunet.md). MODEL_FOLDER refers to the folder containing all 5 folds. Remember that the files in the input folder have to be named according to the nnUNet format, i.e. the CT files end with *_0000.nii.gz* and the PET images with *_0001.nii.gz*.
+
+```bash
+nnUNetv2_predict_from_modelfolder -i INPUT_FOLDER -o OUTPUT_FOLDER -m MODEL_FOLDER
+```
+
+
 Happy coding! 🚀
+
+# Citation
+
+
+```
+@article{rokuss2024fdgpsmahitchhikersguide,
+      title={From FDG to PSMA: A Hitchhiker's Guide to Multitracer, Multicenter Lesion Segmentation in PET/CT Imaging}, 
+      author={Maximilian Rokuss and Balint Kovacs and Yannick Kirchhoff and Shuhan Xiao and Constantin Ulrich and Klaus H. Maier-Hein and Fabian Isensee},
+      journal={ArXiv},
+      year={2024},
+      publisher={arXiv},
+      eprint={2409.09478},
+      archivePrefix={arXiv},
+      url={https://arxiv.org/abs/2409.09478}, 
+}
+```
 
 # Acknowledgements
 <img src="documentation/assets/HI_Logo.png" height="100px" />
