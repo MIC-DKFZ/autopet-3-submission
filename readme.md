@@ -1,6 +1,6 @@
-# Welcome to our solution for the autoPET III challenge
+# [autoPET III Winning Solution] MICCAI 2024 Challenge Submission: Team LesionTracer
 
-This repository provides the code for running our approach to the [AutoPET III Challenge](https://autopet-iii.grand-challenge.org/) (*Team LesionTracer*). When using this repository, please cite our paper:
+🏆 This repository provides the code for running our approach to the [AutoPET III Challenge](https://autopet-iii.grand-challenge.org/) (*Team LesionTracer*) which was awared the first place in the model centric category. When using this repository, please cite our paper:
 
 **From FDG to PSMA: A Hitchhiker's Guide to Multitracer, Multicenter Lesion Segmentation in PET/CT Imaging** 
 
