@@ -24,7 +24,7 @@ Our model builds on [nnU-Net](https://github.com/MIC-DKFZ/nnUNet) with a [ResEnc
 - The model is trained using [misalignment data augmentation](https://github.com/MIC-DKFZ/misalignment_DA) as well as omitting the smoothing term in the dice loss calcuation.
 - We use a dual-headed architecture for organ and lesion segmentation which improves performance as well as speeds up convergence, especially in cases without lesions.
 
-**You can [download the final checkpoint here](https://zenodo.org/records/13786235)!**
+**You can [download the final checkpoint here](https://zenodo.org/records/13786235)!** We updated the trainer class on Oct 29, 2024. Please download again in case you had troubles with the old checkpoint.
 
 ## Getting started
 
@@ -76,7 +76,7 @@ Now you are good to go to start a training. Use the dataset with DATASET_ID_LESI
 
 ### Training
 
-Training the model can be simply achieved by [downloading the pretrained checkpoint](https://zenodo.org/records/13753413) (Dataset619_nativemultistem) and running:
+Training the model can be simply achieved by [downloading the pretrained (not the final) checkpoint](https://zenodo.org/records/13753413) (Dataset619_nativemultistem) and running:
 
 ```bash
 nnUNetv2_train DATASET_ID_LESIONS 3d_fullres 0 -tr autoPET3_Trainer -p nnUNetResEncUNetLPlansMultiTalent -pretrained_weights /path/to/pretrained/weights/fold_all/checkpoint_final.pth
