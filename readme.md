@@ -24,7 +24,7 @@ Our model builds on [nnU-Net](https://github.com/MIC-DKFZ/nnUNet) with a [ResEnc
 - The model is trained using [misalignment data augmentation](https://github.com/MIC-DKFZ/misalignment_DA) as well as omitting the smoothing term in the dice loss calcuation.
 - We use a dual-headed architecture for organ and lesion segmentation which improves performance as well as speeds up convergence, especially in cases without lesions.
 
-**You can [download the final checkpoint here](https://zenodo.org/records/13786235)!** We updated the trainer class on Oct 29, 2024. Please download again in case you had troubles with the old checkpoint.
+**You can [download the final checkpoint here](https://zenodo.org/records/14007247)!** We updated the trainer class on Oct 29, 2024. Please download again in case you had troubles with the old checkpoint.
 
 ## Getting started
 
@@ -87,7 +87,7 @@ We train a five fold cross-validation for our final submission.
 
 ### Inference
 
-After training your own model or [downloading our final checkpoint here](https://zenodo.org/records/13786235) you can use the standard nnUNet inference, for more information see [here](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/how_to_use_nnunet.md). MODEL_FOLDER refers to the folder containing all 5 folds. Remember that the files in the input folder have to be named according to the nnUNet format, i.e. the CT files end with *_0000.nii.gz* and the PET images with *_0001.nii.gz*.
+After training your own model or [downloading our final checkpoint here](https://zenodo.org/records/14007247) you can use the standard nnUNet inference, for more information see [here](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/how_to_use_nnunet.md). MODEL_FOLDER refers to the folder containing all 5 folds. Remember that the files in the input folder have to be named according to the nnUNet format, i.e. the CT files end with *_0000.nii.gz* and the PET images with *_0001.nii.gz*.
 
 ```bash
 nnUNetv2_predict_from_modelfolder -i INPUT_FOLDER -o OUTPUT_FOLDER -m MODEL_FOLDER
