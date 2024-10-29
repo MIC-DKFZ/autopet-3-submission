@@ -537,3 +537,9 @@ class autoPET3_Trainer(nnUNetTrainer):
 
         self.set_deep_supervision_enabled(True)
         compute_gaussian.cache_clear()
+
+
+class nnUNetTrainerFineTuneLR1e3_619autoPetStem_010misalign_rot555_sh022_noSmooth_organs_1500ep(autoPET3_Trainer):
+    def __init__(self, plans, configuration, fold, dataset_json, unpack_dataset = True, device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.num_epochs = 1500
